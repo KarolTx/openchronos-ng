@@ -140,6 +140,7 @@ static void altitude_deactivate(void)
 	//update_pressure_table((s16) sAlt.raw_altitude, sAlt.pressure, sAlt.temperature);
     
     lcd_screens_destroy();
+    display_clear(0, 0);
 }
 
 
