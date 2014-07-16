@@ -196,6 +196,12 @@ void check_events(void)
 	}
 #endif
 
+	/* drivers/radio */
+    if(radio_last_event){
+        msg |= SYS_MSG_RADIO;
+        radio_last_event = 0;
+    }
+
 	{
 		struct sys_messagebus *p = messagebus;
 

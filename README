@@ -22,3 +22,46 @@ msp430mcu-20120716
 and for debugging:
 msp430-gdb-7.2_p20111205
 mspdebug-0.21
+
+
+merged altitude branch at http://openchronos-ng.sourceforge.net and https://github.com/rodan/openchronos-rfsw
+
+ new module:      https://github.com/rodan/openchronos-rfsw
+ author:          Petre Rodan <petre.rodan@simplex.ro>
+ license:         GNU GPLv3
+
+ Based on a nice tutorial by Christian M. Schmid
+ http://blog.chschmid.com/?page_id=193
+
+ Requirements:
+
+   msp430 toolchain
+   python-2.7
+
+ Usage:
+
+ Line1 contains FF.DD
+
+ FF is the decimal notation of the family in which the device is placed [1-16]
+                  A is 01, B is 02 ... P is 16.
+                  this option must be used for doorbell/PIR device selection
+ DD is the decimal notation of the device number [1-16]
+                  on some factory remotes devices are placed in 4 groups,
+                  in this case device 2 from group 3 is device number 10.
+                  special devices like doorbell/PIRs must be set as device number 8.
+
+ Line2 becomes 'on', 'off', 'spe' depending on what command was sent last
+
+  if compile time option CONFIG_MOD_INTERTECHNO_PW is set then the output power is 
+ selectable on Line2.
+
+ radio glyphs come up when the command is sent.
+
+ buttons:
+
+ up      - send an 'on' command to the current device
+ down    - send an 'off' command
+ #       - send a special command (for doorbells/PIRs), make sure DD is 8 in this case.
+ long *  - enter config mode. use up, down, # to select family and device, * to save.
+
+[1] http://www.ti.com/tool/ez430-chronos

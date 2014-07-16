@@ -126,6 +126,7 @@ enum sys_message {
 	SYS_MSG_PS_INT =	BITB,
 	SYS_MSG_BATT =    BITC,
     SYS_MSG_FAKE =    BITD,
+    SYS_MSG_RADIO       = BITE,
 };
 
 /*!
