@@ -108,51 +108,51 @@ static void intertechno_num_pressed()
 }
 
 /*************************** edit mode callbacks **************************/
-static void it_edit_ff_sel(void)
+static void it_edit_ff_sel(uint8_t pos)
 {
     display_chars(0, LCD_SEG_L1_3_2, NULL, BLINK_ON);
 }
 
-static void it_edit_ff_dsel(void)
+static void it_edit_ff_dsel(uint8_t pos)
 {
     display_chars(0, LCD_SEG_L1_3_2, NULL, BLINK_OFF);
 }
 
-static void it_edit_ff_set(int8_t step)
+static void it_edit_ff_set(uint8_t pos, int8_t step)
 {
     helpers_loop(&it_tmp_family, 1, 16, step);
     _printf(0, LCD_SEG_L1_3_2, "%02u", it_tmp_family);
 }
 
-static void it_edit_dd_sel(void)
+static void it_edit_dd_sel(uint8_t pos)
 {
     display_chars(0, LCD_SEG_L1_1_0, NULL, BLINK_ON);
 }
 
-static void it_edit_dd_dsel(void)
+static void it_edit_dd_dsel(uint8_t pos)
 {
     display_chars(0, LCD_SEG_L1_1_0, NULL, BLINK_OFF);
 }
 
-static void it_edit_dd_set(int8_t step)
+static void it_edit_dd_set(uint8_t pos, int8_t step)
 {
     helpers_loop(&it_tmp_device, 1, 16, step);
     _printf(0, LCD_SEG_L1_1_0, "%02u", it_tmp_device);
 }
 
 #ifdef CONFIG_MOD_INTERTECHNO_PW
-static void it_edit_pwr_sel(void)
+static void it_edit_pwr_sel(uint8_t pos)
 {
     _printf(0, LCD_SEG_L2_2_0, " %02x", it_pwr[it_pwr_level]);
     display_chars(0, LCD_SEG_L2_1_0, NULL, BLINK_ON);
 }
 
-static void it_edit_pwr_dsel(void)
+static void it_edit_pwr_dsel(uint8_t pos)
 {
     display_chars(0, LCD_SEG_L2_1_0, NULL, BLINK_OFF);
 }
 
-static void it_edit_pwr_set(int8_t step)
+static void it_edit_pwr_set(uint8_t pos, int8_t step)
 {
     helpers_loop(&it_tmp_pwr_level, 0, 3, step);
     _printf(0, LCD_SEG_L2_1_0, "%02x", it_pwr[it_tmp_pwr_level]);
