@@ -25,15 +25,11 @@
 #include <drivers/display.h>
 #include <drivers/rtca.h>
 
-static union {
-	struct {
-		/* one shot alarm */
-		uint8_t alarm:1;
-		/* hourly chime */
-		uint8_t chime:1;
-	};
-	uint8_t state:2;
-} alarm_state;
+#define ALARM_MASK      0x03
+#define ALARM_ONE       0x01
+#define ALARM_CHIME     0x02
+
+static uint8_t alarm_state = 0x00;
 
 static uint8_t tmp_hh, tmp_mm;
 
@@ -117,15 +113,15 @@ static void alarm_deactivated()
 static void num_pressed()
 {
 	/* this cycles between all alarm/chime combinations and overflow */
-	alarm_state.state++;
+	alarm_state = (alarm_state + 1) & ALARM_MASK;
 
 	/* Register RTC only if needed, saving CPU cycles.. */
-	if (alarm_state.state)
+	if (alarm_state & ALARM_MASK)
 		sys_messagebus_register(alarm_event, SYS_MSG_RTC_ALARM);
 	else
 		sys_messagebus_unregister(alarm_event);
 
-	if (alarm_state.alarm) {
+	if (alarm_state & ALARM_ONE) {
 		display_symbol(0, LCD_ICON_ALARM, SEG_ON);
 		rtca_enable_alarm();
 	} else {
@@ -133,7 +129,7 @@ static void num_pressed()
 		rtca_disable_alarm();
 	}
 
-	if (alarm_state.chime) {
+	if (alarm_state & ALARM_CHIME) {
 		display_symbol(0, LCD_ICON_BEEPER2, SEG_ON);
 		display_symbol(0, LCD_ICON_BEEPER3, SEG_ON);
 	} else {
